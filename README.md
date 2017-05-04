@@ -25,6 +25,9 @@ All uses of `tasks` can be replaced with `t`
 #### Completing a task
 `task complete [ID]` OR `task c [ID]` : Mark a task as complete
 
+#### Marking a task as incomplete
+`task uncomplete [ID]` OR `task u [ID]` : Mark a task as complete
+
 #### Deleting a task
 `task delete [ID]` OR `task d [ID]` : Delete a task
 
