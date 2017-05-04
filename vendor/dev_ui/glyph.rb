@@ -1,0 +1,29 @@
+require 'dev_ui'
+
+module DevUI
+  module Glyph
+    STAR_CODEPOINT     = 0x2b51  # BLACK SMALL STAR
+    INFO_CODEPOINT     = 0x1d4be # MATHEMATICAL SCRIPT SMALL I
+    QUESTION_CODEPOINT = 0x003f  # QUESTION MARK
+    CHECK_CODEPOINT    = 0x2713  # CHECK MARK
+    X_CODEPOINT        = 0x2717  # BALLOT X
+
+    STAR_GLYPH      = [STAR_CODEPOINT].pack('U')
+    INFO_GLYPH      = [INFO_CODEPOINT].pack('U')
+    QUESTION_GLYPH  = [QUESTION_CODEPOINT].pack('U')
+    CHECK_GLYPH     = [CHECK_CODEPOINT].pack('U')
+    X_GLYPH         = [X_CODEPOINT].pack('U')
+
+    STAR_WITHOUT_RESET     = DevUI::Color::YELLOW + STAR_GLYPH
+    INFO_WITHOUT_RESET     = DevUI::Color::BLUE   + INFO_GLYPH
+    QUESTION_WITHOUT_RESET = DevUI::Color::BLUE   + QUESTION_GLYPH
+    CHECK_WITHOUT_RESET    = DevUI::Color::GREEN  + CHECK_GLYPH
+    X_WITHOUT_RESET        = DevUI::Color::RED    + X_GLYPH
+
+    STAR     = STAR_WITHOUT_RESET     + DevUI::Color::RESET
+    INFO     = INFO_WITHOUT_RESET     + DevUI::Color::RESET
+    QUESTION = QUESTION_WITHOUT_RESET + DevUI::Color::RESET
+    CHECK    = CHECK_WITHOUT_RESET    + DevUI::Color::RESET
+    X        = X_WITHOUT_RESET        + DevUI::Color::RESET
+  end
+end

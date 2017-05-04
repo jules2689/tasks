@@ -1,0 +1,33 @@
+#!/usr/bin/ruby --disable-gems
+
+lib_path = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+vendor_path = File.expand_path('../../vendor', __FILE__)
+$LOAD_PATH.unshift(vendor_path) unless $LOAD_PATH.include?(vendor_path)
+
+require 'task_engine'
+
+# Make sure everything is setup first
+unless File.exist?(Task.storage_path)
+  FileUtils.mkpath(File.dirname(Task.storage_path))
+  default_hash = { version: VERSION, tasks: {} }
+  File.write(Task.storage_path, default_hash.to_yaml)
+end
+
+# Handle arguments
+case ARGV.shift
+when nil, 'list', 'l'
+  TaskEngine.list_tasks(ARGV[0])
+when 'add', 'a'
+  TaskEngine.add_task(*ARGV)
+when 'delete', 'd'
+  TaskEngine.delete_task(ARGV[0])
+when 'complete', 'c'
+  TaskEngine.complete_task(ARGV[0])
+when 'help', 'h'
+  TaskEngine.help!
+else
+  puts 'Invalid Usage.'
+  TaskEngine.help!
+end
