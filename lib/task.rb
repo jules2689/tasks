@@ -4,7 +4,7 @@ require 'tasks/task_object'
 class Task
   STATES = {
     complete: 'complete',
-    uncomplete: 'uncomplete'
+    incomplete: 'incomplete'
   }.freeze
   extend TaskPersistence
   include TaskObject

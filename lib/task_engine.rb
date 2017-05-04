@@ -61,6 +61,22 @@ class TaskEngine
       puts DevUI::Frame.bottom_edge(DevUI::Glyph::CHECK + ' Done ')
     end
 
+    def incomplete_task(task_ids)
+      puts DevUI::Frame.top_edge(DevUI::Glyph::STAR + ' Complete ')
+      task_ids.split(',').each do |id|
+        id.strip!
+        task = Task.find(id)
+        if task
+          task.mark_incomplete
+          puts format_line(task)
+          task.save!
+        else
+          puts format_line("Couldn't find task with id {{bold:#{id}}}")
+        end
+      end
+      puts DevUI::Frame.bottom_edge(DevUI::Glyph::CHECK + ' Done ')
+    end
+
     def help!
       msg = <<-EOF
 Task List
@@ -75,6 +91,9 @@ Task List
 
 {{bold:Completing a task}}
 {{command:task}} {{green:[complete | c]}} [ID]
+
+{{bold:Marking a task as incomplete}}
+{{command:task}} {{green:[uncomplete | u]}} [ID]
 
 {{bold:Deleting a task}}
 {{command:task}} {{green:[delete | d]}} [ID]

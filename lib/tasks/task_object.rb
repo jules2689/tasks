@@ -39,6 +39,10 @@ module TaskObject
     @state = Task::STATES[:complete]
   end
 
+  def mark_incomplete
+    @state = Task::STATES[:incomplete]
+  end
+
   def to_h
     {
       id:           @id,

@@ -25,6 +25,8 @@ when 'delete', 'd'
   TaskEngine.delete_task(ARGV[0])
 when 'complete', 'c'
   TaskEngine.complete_task(ARGV[0])
+when 'uncomplete', 'u'
+  TaskEngine.incomplete_task(ARGV[0])
 when 'help', 'h'
   TaskEngine.help!
 else
