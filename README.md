@@ -1,7 +1,7 @@
 Task
 ---
 
-![Usage](https://cloud.githubusercontent.com/assets/3074765/25690757/5b8554e0-3062-11e7-8888-bcf7c90bd097.png)
+![Usage](https://cloud.githubusercontent.com/assets/3074765/25690782/d56c2ffe-3062-11e7-8d98-1639943e312b.png)
 
 A super simple command line application to handle tasks. Stores tasks in a YAML file.
 
