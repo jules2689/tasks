@@ -29,7 +29,7 @@ module Integrations
         end
       end
 
-      air = self.class.new
+      air = new
       return unless air.config_valid?
 
       if async
