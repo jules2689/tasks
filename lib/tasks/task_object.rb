@@ -1,15 +1,16 @@
 require 'time'
 
 module TaskObject
-  attr_accessor :id, :created_at, :updated_at, :completed_at, :title, :state
+  attr_accessor :id, :created_at, :updated_at, :completed_at, :title, :state, :airtable_id
 
   def initialize(task)
     @id           = task[:id]
     @title        = task[:title]
-    @state        = task[:state]
+    @state        = task[:state] || Task::STATES[:incomplete]
     @created_at   = Time.parse(task[:created_at])   if task[:created_at]
     @updated_at   = Time.parse(task[:updated_at])   if task[:updated_at]
     @completed_at = Time.parse(task[:completed_at]) if task[:completed_at]
+    @airtable_id  = task[:airtable_id]
   end
 
   def save!
@@ -50,7 +51,8 @@ module TaskObject
       updated_at:   @updated_at ? @updated_at.utc.to_s : nil,
       completed_at: @completed_at ? @completed_at.utc.to_s : nil,
       title:        @title,
-      state:        @state
+      state:        @state,
+      airtable_id:  @airtable_id
     }
   end
 

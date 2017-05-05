@@ -29,6 +29,8 @@ when 'uncomplete', 'u'
   TaskEngine.incomplete_task(ARGV[0])
 when 'help', 'h'
   TaskEngine.help!
+when 'airtable_sync'
+  TaskEngine.sync_to_airtable
 else
   puts 'Invalid Usage.'
   TaskEngine.help!

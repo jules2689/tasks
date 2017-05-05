@@ -3,6 +3,7 @@ require 'terminal-table'
 require 'fileutils'
 require 'yaml'
 require 'task'
+require 'integrations/airtable'
 
 VERSION = '0.1.0'.freeze
 
@@ -26,6 +27,7 @@ class TaskEngine
         state: Task::STATES[:uncomplete]
       )
       task.save!
+      Integrations::Airtable.request(air_method: :create, params: task.to_h, task: task)
       puts format_line(task)
       puts DevUI::Frame.bottom_edge(DevUI::Glyph::CHECK + ' Done ')
     end
@@ -38,6 +40,7 @@ class TaskEngine
         if task
           puts format_line("Deleting Task {{bold:#{id}}}")
           task.delete!
+          Integrations::Airtable.request(air_method: :delete, id: task.airtable_id)
         else
           puts format_line("Couldn't find task with id {{bold:#{id}}}")
         end
@@ -54,6 +57,12 @@ class TaskEngine
           task.mark_complete
           puts format_line(task)
           task.save!
+          Integrations::Airtable.request(
+            air_method: :update,
+            params: { state: task.state },
+            id: task.airtable_id,
+            task: task
+          )
         else
           puts format_line("Couldn't find task with id {{bold:#{id}}}")
         end
@@ -70,6 +79,12 @@ class TaskEngine
           task.mark_incomplete
           puts format_line(task)
           task.save!
+          Integrations::Airtable.request(
+            air_method: :update,
+            params: { state: task.state },
+            id: task.airtable_id,
+            task: task
+          )
         else
           puts format_line("Couldn't find task with id {{bold:#{id}}}")
         end
@@ -102,6 +117,34 @@ Task List
         text = DevUI::Formatter.new(line)
         puts DevUI::Frame.inset(text.format)
       end
+    end
+
+    def sync_to_airtable
+      puts DevUI::Frame.top_edge(DevUI::Glyph::STAR + ' Sync ')
+      tasks = Task.all
+      tasks.each do |task|
+        if task.airtable_id.nil?
+          puts format_line("Syncing Task (create) {{bold:#{task.id}}}")
+          Integrations::Airtable.request(
+            air_method: :create,
+            params: task.to_h,
+            task: task,
+            log: true,
+            async: false
+          )
+        else
+          puts format_line("Syncing Task (update) {{bold:#{task.id}}}")
+          Integrations::Airtable.request(
+            air_method: :update,
+            params: task.to_h,
+            id: task.airtable_id,
+            task: task,
+            log: true,
+            async: false
+          )
+        end
+      end
+      puts DevUI::Frame.bottom_edge(DevUI::Glyph::CHECK + ' Done ')
     end
 
     private
