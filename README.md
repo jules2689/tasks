@@ -57,3 +57,14 @@ airtable:
 ## Airtable
 
 Airtable is a great online spreadsheet-like tool. It has a great API and allows you to do some cool stuff that normal spreadsheets can't do. See Config to see how to enable it. Once you do, run `task airtable_sync` to synchronize your current tasks.
+
+Schema of the table should be:
+
+| name          | type                                        |
+| ------------- | ------------------------------------------- |
+| id            | int, primary                                |
+| created_at    | datetime                                    |
+| updated_at    | datetime                                    |
+| completed_at  | datetime                                    |
+| title         | string                                      |
+| state         | single select (complete, incomplete states) |
