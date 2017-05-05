@@ -36,3 +36,9 @@ All uses of `tasks` can be replaced with `t`
 A YAML file at `~/.task.config.yml` can be used to specify a few options.
 
 - `data` can be specified, which changes where the YAML file for your tasks are stored
+- `airtable` integration can be specified, which will sync your todos to [Airtable](https://airtable.com)
+    ```yaml
+    airtable:
+      api_key: KEY
+      app_key: KEY
+    ```
