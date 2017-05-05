@@ -31,4 +31,8 @@ All uses of `tasks` can be replaced with `t`
 #### Deleting a task
 `task delete [ID]` OR `task d [ID]` : Delete a task
 
-###
+## Config
+
+A YAML file at `~/.task.config.yml` can be used to specify a few options.
+
+- `data` can be specified, which changes where the YAML file for your tasks are stored

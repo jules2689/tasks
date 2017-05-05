@@ -1,3 +1,5 @@
+require 'config'
+
 module TaskPersistence
   def all
     tasks_hash[:tasks].map do |id, task_hash|
@@ -21,6 +23,7 @@ module TaskPersistence
   end
 
   def storage_path
-    File.expand_path('../../../data/.tasks.yml', __FILE__)
+    path = Config.config['data'] || '../../../data/.tasks.yml'
+    File.expand_path(path, __FILE__)
   end
 end
