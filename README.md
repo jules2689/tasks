@@ -43,6 +43,17 @@ A YAML file at `~/.task.config.yml` can be used to specify a few options.
       app_key: KEY
     ```
 
+#### Example
+
+(with all options)
+
+```yaml
+data: ~/Dropbox/tasks.yml
+airtable:
+  api_key: KEY
+  app_key: KEY
+```
+
 ## Airtable
 
 Airtable is a great online spreadsheet-like tool. It has a great API and allows you to do some cool stuff that normal spreadsheets can't do. See Config to see how to enable it. Once you do, run `task airtable_sync` to synchronize your current tasks.
