@@ -18,7 +18,7 @@ end
 # Handle arguments
 case ARGV.shift
 when nil, 'list', 'l'
-  TaskEngine.list_tasks(ARGV[0])
+  TaskEngine.list_tasks(*ARGV)
 when 'add', 'a'
   TaskEngine.add_task(*ARGV)
 when 'delete', 'd'

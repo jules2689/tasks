@@ -9,9 +9,22 @@ VERSION = '0.1.0'.freeze
 
 class TaskEngine
   class << self
-    def list_tasks(arg)
+    def list_tasks(*args)
       tasks = Task.all
-      tasks = tasks.reject(&:complete?) unless arg == 'all'
+
+      tasks = if args.include?('--complete')
+        tasks.select(&:complete?)
+      elsif args.include?('--all')
+        tasks
+      else # Also --incomplete
+        tasks.reject(&:complete?)
+      end
+
+      if args.include?('--count')
+        puts tasks.size
+        return
+      end
+
       table = Terminal::Table.new(
         headings: ['', 'ID', 'Title', 'Updated At'],
         rows: tasks.map(&:to_a),
@@ -99,7 +112,7 @@ Task List
 {{bold:Usage}}
 
 {{bold:List Task}}
-{{command:task}} {{green:[list | l | <nothing>]}}
+{{command:task}} {{green:[list | l | <nothing>] {{cyan:[--complete|--incomplete|--all]}} {{cyan:--count}}}}
 
 {{bold:Adding a task}}
 {{command:task}} {{green:[add | a]}} [TITLE]
